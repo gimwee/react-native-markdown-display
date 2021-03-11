@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import {Platform, Dimensions} from 'react-native';
 
 // this is converted to a stylesheet internally at run time with StyleSheet.create(
 export const styles = {
@@ -9,32 +9,39 @@ export const styles = {
   heading1: {
     flexDirection: 'row',
     fontSize: 32,
+    color: '#616264',
   },
   heading2: {
     flexDirection: 'row',
     fontSize: 24,
+    color: '#616264',
   },
   heading3: {
     flexDirection: 'row',
     fontSize: 18,
+    color: '#616264',
   },
   heading4: {
     flexDirection: 'row',
     fontSize: 16,
+    color: '#616264',
   },
   heading5: {
     flexDirection: 'row',
     fontSize: 13,
+    color: '#616264',
   },
   heading6: {
     flexDirection: 'row',
     fontSize: 11,
+    color: '#616264',
   },
 
   // Horizontal Rule
   hr: {
     backgroundColor: '#000000',
     height: 1,
+    color: '#616264',
   },
 
   // Emphasis
@@ -63,6 +70,8 @@ export const styles = {
   list_item: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    width: Dimensions.get('window').width * 0.7,
+    color: '#616264',
   },
   // @pseudo class, does not have a unique render rule
   bullet_list_icon: {
@@ -85,6 +94,7 @@ export const styles = {
 
   // Code
   code_inline: {
+    color: '#616264',
     borderWidth: 1,
     borderColor: '#CCCCCC',
     backgroundColor: '#f5f5f5',
@@ -133,8 +143,10 @@ export const styles = {
   // Tables
   table: {
     borderWidth: 1,
-    borderColor: '#000000',
+    borderColor: '#616264',
     borderRadius: 3,
+    width: Dimensions.get('window').width * 0.6,
+    color: '#616264',
   },
   thead: {},
   tbody: {},
@@ -178,6 +190,7 @@ export const styles = {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     width: '100%',
+    color: '#616264',
   },
   hardbreak: {
     width: '100%',
@@ -189,4 +202,11 @@ export const styles = {
   pre: {},
   inline: {},
   span: {},
+
+  //mentioned && hash_tags
+  mentionedTextStyle: {
+    fontWeight: '400',
+    color: '#14B4E5',
+    fontSize: 14,
+  },
 };

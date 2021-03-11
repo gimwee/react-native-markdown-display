@@ -13,6 +13,17 @@ import hasParents from './util/hasParents';
 
 import textStyleProps from './data/textStyleProps';
 
+const getTaggingRenderText = (matchingString) => {
+  const regex = /[^\[]+(?=\])/gi;
+  const match = matchingString.match(regex);
+
+  if (match && match[1].includes('hashtag')) {
+    return `${match[0]}`;
+  } else {
+    return `@ ${match[0]}`;
+  }
+};
+
 const renderRules = {
   // when unknown elements are introduced, so it wont break
   unknown: (node, children, parent, styles) => null,
@@ -300,11 +311,31 @@ const renderRules = {
   },
 
   // Text Output
-  text: (node, children, parent, styles, inheritedStyles = {}) => (
-    <Text key={node.key} style={[inheritedStyles, styles.text]}>
-      {node.content}
-    </Text>
-  ),
+  text: (node, children, parent, styles, inheritedStyles = {}) => {
+    const mentionRegEx = /(?<original>(?<trigger>.)\[(?<name>[^[]*)]\[tag:(?<id>[^[]*)\])/gi;
+    const hashTagRegEx = /(?<original>@\[(?<trigger>.)(?<name>[^[]*)]\[hashtag:#(?<id>[^[]*)\])/gi;
+    const matchedMentioned  = node.content.match(mentionRegEx);
+    const matchedHashTag = node.content.match(hashTagRegEx)
+    let content = node.content;
+    let tagStyle = false;
+
+    if(matchedMentioned !== null) {
+      console.log(matchedMentioned[0])
+      content = getTaggingRenderText(matchedMentioned[0]);
+      tagStyle = true;
+    } else if (matchedHashTag !== null) {
+      console.log(matchedHashTag[0])
+      content = getTaggingRenderText(matchedHashTag[0]);
+      tagStyle = true;
+    }
+    
+
+    return (
+      <Text key={node.key} style={[inheritedStyles, styles.text, tagStyle && styles.mentionedTextStyle]}>
+        {content}
+      </Text>
+    )
+  },
   textgroup: (node, children, parent, styles) => (
     <Text key={node.key} style={styles.textgroup}>
       {children}
